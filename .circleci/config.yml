@@ -3,12 +3,12 @@ orbs:
 workflows:
   version: 2
   main:
-      docker:
-      - image: circleci/node:8
     jobs:
       - react-native/node:
           name: node
       - react-native/android:
+      docker:
+      - image: circleci/node:8
           name: android
           requires:
             - node
