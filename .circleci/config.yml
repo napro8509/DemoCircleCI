@@ -50,10 +50,17 @@ jobs:
       - run:
           name: fastlane tests
           command: |
-  react-native bundle --platform android --dev false --entry-file index.android.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
-  cd android && ./gradlew assembleRelease --stacktrace
-  cd ..
-  mv android/app/build/outputs/apk/release/app-universal-release.apk ANDROID_DEV_v${CI_BUILD_ID}.apk
-
+          react-native bundle --platform android --dev false --entry-file index.android.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
+          cd android && ./gradlew assembleRelease --stacktrace
+          cd ..
+          mv android/app/build/outputs/apk/release/app-universal-release.apk ANDROID_DEV_v${CI_BUILD_ID}.apk
+workflows:
+  version: 2.1
+  node-android-ios:
+    jobs:
+      - node
+      - android:
+          requires:
+            - node
 
 
