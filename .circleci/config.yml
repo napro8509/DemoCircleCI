@@ -1,3 +1,5 @@
+before_script:
+  - export ANDROID_HOME="/Users/admin/Library/Android/sdk"
 
 version: 2
 jobs:
