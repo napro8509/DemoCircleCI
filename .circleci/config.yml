@@ -1,0 +1,24 @@
+# For a detailed guide to building and testing on iOS, read the docs:
+# https://circleci.com/docs/2.0/testing-ios/
+
+version: 2.1
+
+jobs:
+test_android:
+
+ tags:
+  - android-ssd
+ stage: build
+ script:
+  - rm -rf node_modules
+  - rm -f package-lock.json
+  - npm install --verbose
+  - react-native bundle --platform android --dev false --entry-file index.android.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
+  - cd android && ./gradlew assembleRelease --stacktrace
+  - cd ..
+  - mv android/app/build/outputs/apk/release/app-universal-release.apk ANDROID_DEV_v${CI_BUILD_ID}.apk
+ artifacts:
+  name: ANDROID_DEV_v${CI_BUILD_ID}
+  paths:
+   - ANDROID_DEV_v${CI_BUILD_ID}.apk
+
