@@ -1,18 +1,21 @@
+--- 
+orbs: ~
 version: 2.1
-orbs:
-workflows:
+workflows: 
+  main: 
+    jobs: 
+      docker: 
+        - 
+          image: "circleci/node:8"
+        - 
+          run: 
+            build: 
+              - 
+                run: 
+                  command: "\"react-native start\""
+                  name: "fastlane adhoc android"
+                  working_directory: android
+            name: android
+            requires: 
+              - node
   version: 2
-  main:
-    jobs:
-      docker:
-      - image: circleci/node:8
-            - run:
-          name: android
-          requires:
-            - node
-          build:
-            - run:
-                name: fastlane adhoc android
-                working_directory: android
-                command: |
-                  "react-native start"
