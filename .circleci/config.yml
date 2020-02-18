@@ -18,6 +18,7 @@ jobs:
             - v1-dependencies-
 
       - run: yarn install
+      - run: react-native start
 
       - save_cache:
           paths:
