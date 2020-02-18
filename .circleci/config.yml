@@ -1,9 +1,10 @@
 version: 2.1
 orbs:
-- image: circleci/node:8
 workflows:
   version: 2
   main:
+      docker:
+      - image: circleci/node:8
     jobs:
       - react-native/node:
           name: node
