@@ -1,34 +1,29 @@
---- 
+version: 2.1
+orbs:
+  react-native: echobind/react-native@0.1.0
+workflows:
   version: 2
-jobs: 
-  android: 
-    docker: 
-      - image: "circleci/android:api-27-node8-alpha"
-      - image: "circleci/node:8"
-    working_directory: ~/DemoCircleCI
-    steps: 
-      - 
-        checkout: 
-          path: ~/DemoCircleCI
-      - 
-        attach_workspace: 
-          at: ~/DemoCircleCI
-      - 
-        run: "bundle install"
-      - run: "yarn install"
-      - 
-        run: 
-          command: 
-            - "react-native bundle --platform android --dev false --entry-file index.android.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/"
-            - "cd android && ./gradlew assembleRelease --stacktrace"
-            - "cd .."
-            - "mv android/app/build/outputs/apk/release/app-universal-release.apk ANDROID_DEV_v${CI_BUILD_ID}.apk"
-          name: "fastlane tests"
-          
-          workflows:
-  version: 2
-  node-android-ios:
+  main:
     jobs:
-      - android:
+      - react-native/node:
+          name: node
+      - react-native/android:
+          name: android
           requires:
             - node
+          build:
+            - run:
+                name: fastlane adhoc android
+                working_directory: android
+                command: |
+                  "react-native start"
+      - react-native/ios:
+          name: ios
+          requires:
+            - node
+          build:
+            - run:
+                name: fastlane adhoc ios
+                working_directory: ios
+                command: |
+                  "react-native start"
