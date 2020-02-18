@@ -18,7 +18,7 @@ jobs:
             - v1-dependencies-
 
       - run: yarn install
-      - run: react-native start
+      - run: cd android && ./gradlew assembleRelease --stacktrace
 
       - save_cache:
           paths:
