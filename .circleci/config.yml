@@ -53,12 +53,3 @@ jobs:
           root: ~/DemoCircleCI
     working_directory: ~/DemoCircleCI
 version: 2.1
-workflows: 
-  node-android-ios: 
-    jobs: 
-      - node
-      - 
-        android: 
-          requires: 
-            - node
-  version: 2.1
