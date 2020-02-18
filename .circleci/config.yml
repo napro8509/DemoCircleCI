@@ -1,4 +1,5 @@
 --- 
+  version: 2
 jobs: 
   android: 
     docker: 
@@ -23,3 +24,11 @@ jobs:
             - "cd .."
             - "mv android/app/build/outputs/apk/release/app-universal-release.apk ANDROID_DEV_v${CI_BUILD_ID}.apk"
           name: "fastlane tests"
+          
+          workflows:
+  version: 2
+  node-android-ios:
+    jobs:
+      - android:
+          requires:
+            - node
