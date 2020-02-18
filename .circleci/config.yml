@@ -4,9 +4,6 @@ workflows:
   version: 2
   main:
     jobs:
-      - react-native/node:
-          name: node
-      - react-native/android:
       docker:
       - image: circleci/node:8
           name: android
@@ -16,15 +13,5 @@ workflows:
             - run:
                 name: fastlane adhoc android
                 working_directory: android
-                command: |
-                  "react-native start"
-      - react-native/ios:
-          name: ios
-          requires:
-            - node
-          build:
-            - run:
-                name: fastlane adhoc ios
-                working_directory: ios
                 command: |
                   "react-native start"
