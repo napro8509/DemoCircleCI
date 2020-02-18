@@ -14,6 +14,7 @@ jobs:
           at: ~/DemoCircleCI
       - 
         run: "bundle install"
+      - run: "yarn install"
       - 
         run: 
           command: 
@@ -22,34 +23,3 @@ jobs:
             - "cd .."
             - "mv android/app/build/outputs/apk/release/app-universal-release.apk ANDROID_DEV_v${CI_BUILD_ID}.apk"
           name: "fastlane tests"
-
-  node: 
-    docker: 
-      - 
-        image: "circleci/node:8"
-    steps: 
-      - 
-        run: "yarn install"
-      - 
-        save_cache: 
-          key: "yarn-v1-{{ checksum \"yarn.lock\" }}-{{ arch }}"
-          paths: 
-            - ~/.cache/yarn
-      - 
-        save_cache: 
-          key: "node-v1-{{ checksum \"package.json\" }}-{{ arch }}"
-          paths: 
-            - node_modules
-      - 
-        run: 
-          command: |
-              mkdir -p test-results/jest
-              yarn run test
-          name: "jest tests"
-      - 
-        persist_to_workspace: 
-          paths: 
-            - node_modules
-          root: ~/DemoCircleCI
-    working_directory: ~/DemoCircleCI
-version: 2.1
